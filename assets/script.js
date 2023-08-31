@@ -3,8 +3,8 @@ const baseUrl = 'https://api.openweathermap.org/data/2.5';
 var cityInput = document.getElementById('city-input');
 var date = dayjs();
 
-
-
+var form = document.querySelector("#city-form");
+form.addEventListener("submit", handleSubmit);
 // handles the user input to get the city name
 function handleSubmit(event) {
     event.preventDefault();
@@ -13,7 +13,7 @@ function handleSubmit(event) {
         .then((data) => {
             if (data) {
                 console.log("Weather data:", data);
-                // TODO call a function to display the data 
+                renderTodayWeather(data);// TODO call a function to display the data 
             }
         });
 }
@@ -21,7 +21,7 @@ function handleSubmit(event) {
 function fetchCity(cityName) {
     var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?&q="+cityName+"&units=imperial&appid=210247e7072d71d9bd213f7367003a6a";
 
-    //fetch the city name
+    //fetch the city data
     return fetch(apiUrl)
         .then((response) => {
             if (response.status === 200) {
@@ -38,8 +38,27 @@ function fetchCity(cityName) {
         });
 }
 
+function renderTodayWeather(data) {
+    var currentDayBox = document.getElementById('current-weather');
+    var currentCity = document.createElement('h2');
+    var currentDayDate = document.createElement('h3');
+    var currentTemp = document.createElement('p');
+    var currentWindSpeed = document.createElement('p');
+    var currentHumidity = document.createElement('p');
     
+    // setting content for created elements
+    currentCity.textContent = `City: ${data.city.name}, ${data.city.country}`;
+    currentDayDate.textContent = `Date: ${date.format('MM-DD-YYYY HH:mm')}`;
+    currentTemp.textContent = `Temperature: ${data.list[0].main.temp}°F`;
+    currentWindSpeed.textContent = `Wind Speed: ${data.list[0].wind.speed} mph`;
+    currentHumidity.textContent = `Humidity: ${data.list[0].main.humidity}%`;
+    
+    // append the created elements
+    currentDayBox.appendChild(currentCity);
+    currentDayBox.appendChild(currentDayDate);
+    currentDayBox.appendChild(currentTemp);
+    currentDayBox.appendChild(currentWindSpeed);
+    currentDayBox.appendChild(currentHumidity);
+}
 
-
-
-
+renderTodayWeather();
