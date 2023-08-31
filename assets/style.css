@@ -1,0 +1,27 @@
+* {
+    /* adds the fontfamily for all text */
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+form {
+    margin-top: 10px;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+section {
+    width: 48%;
+    margin-bottom: 20px;
+}
