@@ -81,8 +81,27 @@ h2, h3, p {
 
 
 #search-history {
-    flex-basis: 100%;
-    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Descendant selectors to style elements within #search-history */
+#search-history ul {
+    list-style-type: none; /* Remove bullet points for list items */
+    padding: 0;
+    margin: 0;
+}
+
+#search-history li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer; /* Add a pointer cursor for clickable items */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+#search-history li:hover {
+    color: #007BFF; /* Change text color on hover */
 }
 
 @media (min-width: 1440px) {

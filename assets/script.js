@@ -2,6 +2,8 @@ const apiKey = '210247e7072d71d9bd213f7367003a6a';
 const baseUrl = 'https://api.openweathermap.org/data/2.5';
 var cityInput = document.getElementById('city-input');
 var date = dayjs();
+var searchedCities = [];
+
 
 var form = document.querySelector("#city-form");
 form.addEventListener("submit", handleSubmit);
@@ -13,10 +15,30 @@ function handleSubmit(event) {
         .then((data) => {
             if (data) {
                 console.log("Weather data:", data);
-                renderTodayWeather(data);// TODO call a function to display the data 
+                renderTodayWeather(data);// 
                 fetchFiveDayForecast(cityName);
+                
+                searchedCities.push(cityName);
+                renderSearchedCities();
             }
         });
+}
+
+function renderSearchedCities() {
+    var searchHistory = document.getElementById('search-history');
+    
+    // create an unordered list to display city names
+    var ul = document.createElement('ul');
+    
+    // loop through the array of searched cities and create list items
+    searchedCities.forEach(function(city) {
+        var li = document.createElement('li');
+        li.textContent = city;
+        ul.appendChild(li);
+    });
+    
+    // append the list to the search history section
+    searchHistory.appendChild(ul);
 }
 
 function fetchCity(cityName) {
@@ -97,12 +119,12 @@ function renderFiveDayForecast(data) {
     var forecastBox = document.getElementById('forecast');
     forecastBox.innerHTML = ''; // clears previous forecast data
     
-    // Loop through the 5-day forecast data and render each day's information
-    for (let i = 0; i < data.list.length; i += 8) { // Data is provided in 3-hour intervals, so we use 8 to get daily data
+    // loop through the 5-day forecast data and render each day's information
+    for (let i = 0; i < data.list.length; i += 8) { 
         var forecastDay = document.createElement('div');
         forecastDay.classList.add('forecast-day');
         
-        var date = dayjs(data.list[i].dt * 1000); // Convert timestamp to date
+        var date = dayjs(data.list[i].dt * 1000); 
         var dateElement = document.createElement('h3');
         dateElement.textContent = date.format('MM-DD-YYYY');
         
